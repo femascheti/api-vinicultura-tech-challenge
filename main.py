@@ -1,10 +1,14 @@
 from flask import Flask, jsonify, request
+from flask_basicauth import BasicAuth
 import pandas as pd
 
 app = Flask(__name__)
+app.config['BASIC_AUTH_USERNAME'] = 'admin'
+app.config['BASIC_AUTH_PASSWORD'] = 'admin'
+
+basic_auth = BasicAuth(app)
 
 def filtrar_dataframe(df, ano=None, control=None, pais=None, dolar_min=None, dolar_max=None, kg_min=None, kg_max=None, litros_max=None, litros_min=None):
-    
     ano = request.args.get('ano')
     pais = request.args.get('pais')
     dolar_min = request.args.get('dolar_min')
@@ -42,6 +46,7 @@ def home():
 
 # Rota produção
 @app.route('/api/v1/producao', methods=['GET'])
+@basic_auth.required
 def get_producao():
     df_producao = pd.read_csv('data/producao_ready.csv')
     df_producao = filtrar_dataframe(df_producao,
