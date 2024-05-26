@@ -1,4 +1,12 @@
 {
+    "version":2,
+    "builds":[
+        {
+            "source":"./app.py",
+            "use":"@vercel/python",
+            "config":{"runtime":"python3.11.5"}
+        }
+    ],
     "routes": [
         {
             "source":"/(.*)",
