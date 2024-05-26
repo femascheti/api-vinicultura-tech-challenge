@@ -7,30 +7,35 @@ def process_csv(csv_path):
 
     # Normaliza o dataframe
     replace_dict = {
-        'ti_':'tintas_',
-        ' ':'_',
-        'br_':'brancaserosadas_',
-        '\(':'_', 
-        '\"':'',
-        '\)': '',
-        'à':'a',
-        'á':'a',
-        'ç':'c',
-        'é':'e',
-        'í':'i',
-        'ó':'o',
-        'ú':'u',
-        'ã':'a',
-        'õ':'o'
-    }
+    'ti_':'tintas_',
+    ' ':'_',
+    'br_':'brancaserosadas_',
+    '\(':'_',
+    '\"':'',
+    '\)': '',
+    'à':'a',
+    'á':'a',
+    'ç':'c',
+    'é':'e',
+    'í':'i',
+    'ó':'o',
+    'ú':'u',
+    'ã':'a',
+    'õ':'o',
+    '\*':'',
+    'nd':''
+}
     df = normalize_dataframe(df, replace_dict)
     df = df.drop(columns=['id', 'cultivar'])
 
     # Pivota tabelas
-    df_melted = df.melt(id_vars='control', var_name='ano', value_name='quantidade_kilo')
+    df_melted = df.melt(id_vars='control', var_name='ano', value_name='quantidade_kg')
 
     replace_dict2 = {'__':'_','\"':'',}
     df_melted = normalize_dataframe(df_melted, replace_dict2)
+
+    df_melted['ano'] = df_melted['ano'].astype('int32')
+
 
     return df_melted
 

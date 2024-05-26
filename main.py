@@ -30,17 +30,17 @@ def filtrar_dataframe(df, ano=None, control=None, pais=None, dolar_min=None, dol
     if dolar_max:
         df = df[df['quantidade_dolar'] <= float(dolar_max)]
     if kg_min:
-        df = df[df['quantidade_kilo'] >= float(kg_min)]
+        df = df[df['quantidade_kg'] >= float(kg_min)]
     if kg_max:
-        df = df[df['quantidade_kilo'] <= float(kg_max)]
+        df = df[df['quantidade_kg'] <= float(kg_max)]
 
     return df
 
 @app.route("/")
-def hello_world():
+def home():
     return "<p>Hello, World!</p>"
 
-# Rota produção ok
+# Rota produção
 @app.route('/api/v1/producao', methods=['GET'])
 def get_producao():
     df_producao = pd.read_csv('data/producao_ready.csv')
@@ -50,9 +50,10 @@ def get_producao():
                                      litros_min=request.args.get('litros_min'),
                                      litros_max=request.args.get('litros_max'))
     producao_json = df_producao.to_json(orient='records')
+    
     return jsonify(producao_json)
 
-# Roda comercial ok
+# Roda comercial
 @app.route('/api/v1/comercial', methods=['GET'])
 def get_comercial():
     df_comercial = pd.read_csv('data/comercial_ready.csv')
@@ -62,9 +63,10 @@ def get_comercial():
                                      litros_min=request.args.get('litros_min'),
                                      litros_max=request.args.get('litros_max'))
     comercial_json = df_comercial.to_json(orient='records')
+    
     return jsonify(comercial_json)
 
-# Rotas para importação TODO adicionar filtrar_dataframe com parametros
+# Rotas para importação
 @app.route('/api/v1/importacao/<tipo>', methods=['GET'])
 def get_importacao(tipo):
     
@@ -72,41 +74,39 @@ def get_importacao(tipo):
         return jsonify({'error': 'Tipo de importação inválido'}), 400
 
     df_importacao = pd.read_csv(f'data/importacao_{tipo}_ready.csv')
-    if request.args.get('dolar_min'):
-        df_importacao = df_importacao[df_importacao['quantidade_dolar'] >= float(request.args.get('dolar_min'))]
-    if request.args.get('dolar_max'):
-        df_importacao = df_importacao[df_importacao['quantidade_dolar'] <= float(request.args.get('dolar_max'))]
-    if request.args.get('kg_min'):
-        df_importacao = df_importacao[df_importacao['quantidade_kilo'] >= float(request.args.get('kg_min'))]
-    if request.args.get('kg_max'):
-        df_importacao = df_importacao[df_importacao['quantidade_kilo'] <= float(request.args.get('kg_max'))]
+    df_importacao = filtrar_dataframe(df_importacao,
+                                      ano=request.args.get('ano'),
+                                      pais=request.args.get('pais'),
+                                      dolar_max=request.args.get('dolar_max'),
+                                      dolar_min=request.args.get('dolar_min'),
+                                      kg_max=request.args.get('kg_max'),
+                                      kg_min=request.args.get('kg_min'),
+                                      )
     importacao_json = df_importacao.to_json(orient='records')
-    if request.args.get('pais'):
-        df_importacao = df_importacao[df_importacao['pais'] == pais]
-
+    
     return jsonify(importacao_json)
 
-# Rotas exportação TODO adicionar filtrar_dataframe com parametros
+# Rotas para exportação
 @app.route('/api/v1/exportacao/<tipo>', methods=['GET'])
 def get_exportacao(tipo):
-    if tipo not in ['vinho', 'uva', 'suco', 'espumante']:
+    
+    if tipo not in ['espumante', 'suco', 'uva', 'vinho']:
         return jsonify({'error': 'Tipo de exportação inválido'}), 400
 
     df_exportacao = pd.read_csv(f'data/exportacao_{tipo}_ready.csv')
     df_exportacao = filtrar_dataframe(df_exportacao,
-                                       ano=request.args.get('ano'),
-                                       control=request.args.get('pais'),
-                                       quantidade_min=request.args.get('kg_min'),
-                                       quantidade_max=request.args.get('kg_max'))
-    if request.args.get('dolar_min'):
-        df_exportacao = df_exportacao[df_exportacao['quantidade_dolar'] >= float(request.args.get('dolar_min'))]
-    if request.args.get('dolar_max'):
-        df_exportacao = df_exportacao[df_exportacao['quantidade_dolar'] <= float(request.args.get('dolar_max'))]
-
+                                      ano=request.args.get('ano'),
+                                      pais=request.args.get('pais'),
+                                      dolar_max=request.args.get('dolar_max'),
+                                      dolar_min=request.args.get('dolar_min'),
+                                      kg_max=request.args.get('kg_max'),
+                                      kg_min=request.args.get('kg_min'),
+                                      )
     exportacao_json = df_exportacao.to_json(orient='records')
+    
     return jsonify(exportacao_json)
 
-# Rotas processamento TODO adicionar filtrar_dataframe com parametros
+# Rotas processamento
 @app.route('/api/v1/processa/<tipo>', methods=['GET'])
 
 def get_processa(tipo):
@@ -118,16 +118,12 @@ def get_processa(tipo):
     df_processa = filtrar_dataframe(df_processa,
                                     ano=request.args.get('ano'),
                                     control=request.args.get('control'),
-                                    quantidade_min=request.args.get('quantidade_min'),
-                                    quantidade_max=request.args.get('quantidade_max'))
-    if request.args.get('quantidade_min'):
-        df_processa = df_processa[df_processa['quantidade_kilo'] >= float(request.args.get('quantidade_min'))]
-    if request.args.get('quantidade_max'):
-        df_processa = df_processa[df_processa['quantidade_kilo'] <= float(request.args.get('quantidade_max'))]
-    
-    export_processa_json = df_processa.to_json(orient='records')
+                                    kg_min=request.args.get('kg_min'),
+                                    kg_max=request.args.get('kg_max'))
+   
+    processa_json = df_processa.to_json(orient='records')
 
-    return jsonify(export_processa_json)
+    return jsonify(processa_json)
 
 if __name__ == '__main__':
     app.run(debug=True)

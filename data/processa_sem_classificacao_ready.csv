@@ -1,4 +1,4 @@
-control,ano,quantidade_kilo
+control,ano,quantidade_kg
 sc,1970,3675463
 sc,1971,665425
 sc,1972,197232
@@ -48,7 +48,7 @@ sc,2015,0
 sc,2016,0
 sc,2017,0
 sc,2018,0
-sc,2019,nd
+sc,2019,
 sc,2020,166947
 sc,2021,0
-sc,2022,*
+sc,2022,

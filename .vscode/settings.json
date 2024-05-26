@@ -1,0 +1,21 @@
+{"todohighlight.keywords": [
+    "DEBUG:",
+    "REVIEW:",
+    {
+        "text": "NOTE:",
+        "color": "#ff0000",
+        "backgroundColor": "yellow",
+        "overviewRulerColor": "grey"
+    },
+    {
+        "text": "REVIEW:",
+        "color": "#0B0D20",
+        "backgroundColor": "#B6FC2B",
+        "isWholeLine": false,
+    },
+    {
+        "text": "TODO:",
+        "color": "#0B0D20",
+        "backgroundColor": "#2BDEFD",
+    }
+],}
