@@ -53,7 +53,8 @@ def get_producao():
                                      ano=request.args.get('ano'),
                                      control=request.args.get('control'),
                                      litros_min=request.args.get('litros_min'),
-                                     litros_max=request.args.get('litros_max'))
+                                     litros_max=request.args.get('litros_max')
+                                     )
     producao_json = df_producao.to_json(orient='records')
     
     return jsonify(producao_json)
@@ -67,7 +68,8 @@ def get_comercial():
                                      ano=request.args.get('ano'),
                                      control=request.args.get('control'),
                                      litros_min=request.args.get('litros_min'),
-                                     litros_max=request.args.get('litros_max'))
+                                     litros_max=request.args.get('litros_max')
+                                     )
     comercial_json = df_comercial.to_json(orient='records')
     
     return jsonify(comercial_json)
