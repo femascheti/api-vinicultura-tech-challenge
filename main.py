@@ -60,6 +60,7 @@ def get_producao():
 
 # Roda comercial
 @app.route('/api/v1/comercial', methods=['GET'])
+@basic_auth.required
 def get_comercial():
     df_comercial = pd.read_csv('data/comercial_ready.csv')
     df_comercial = filtrar_dataframe(df_comercial,
@@ -73,6 +74,7 @@ def get_comercial():
 
 # Rotas para importação
 @app.route('/api/v1/importacao/<tipo>', methods=['GET'])
+@basic_auth.required
 def get_importacao(tipo):
     
     if tipo not in ['espumante', 'frescas', 'passas', 'suco', 'vinho']:
@@ -93,6 +95,7 @@ def get_importacao(tipo):
 
 # Rotas para exportação
 @app.route('/api/v1/exportacao/<tipo>', methods=['GET'])
+@basic_auth.required
 def get_exportacao(tipo):
     
     if tipo not in ['espumante', 'suco', 'uva', 'vinho']:
@@ -113,7 +116,7 @@ def get_exportacao(tipo):
 
 # Rotas processamento
 @app.route('/api/v1/processa/<tipo>', methods=['GET'])
-
+@basic_auth.required
 def get_processa(tipo):
     if tipo not in ['americanas_hibridas','sem_classificacao', 'uvas_mesa', 'viniferas']:
         return jsonify({'error':'tipo de processamento inválido'}), 400
