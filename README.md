@@ -118,6 +118,71 @@ Ao seguir estas sugestões, você cria uma documentação completa e informativa
 
 ## Endpoint comercial
 
+**Objetivo:**
+
+O endpoint `/api/v1/comercial` fornece acesso a dados de comercialização de uva, permitindo filtragem por ano, controle, país, quantidade em litros e quantidade em kg.
+
+**Parâmetros de Entrada:**
+
+* `ano` (opcional): Ano da comercialização (tipo: inteiro). Valor padrão: None.
+* `control` (opcional): Controle da comercialização (tipo: string). Valor padrão: None.
+* `pais` (opcional): País de destino da comercialização (tipo: string). Valor padrão: None.
+* `litros_min` (opcional): Valor mínimo da quantidade em litros (tipo: float). Valor padrão: None.
+* `litros_max` (opcional): Valor máximo da quantidade em litros (tipo: float). Valor padrão: None.
+
+**Resposta Esperada:**
+
+A resposta do endpoint é um JSON contendo os seguintes campos:
+
+* `id`: Identificador único da comercialização.
+* `ano`: Ano da comercialização.
+* `control`: Controle da comercialização.
+* `pais`: País de destino da comercialização.
+* `quantidade_litros`: Quantidade em litros.
+* `valor_total`: Valor total da comercialização em dólares.
+* `data_venda`: Data da venda.
+
+**Exemplos de Uso:**
+
+* **Obter dados de comercialização de todos os anos:**
+
+```bash
+GET /api/v1/comercial
+```
+
+* **Obter dados de comercialização do ano 2023:**
+
+```bash
+GET /api/v1/comercial?ano=2023
+```
+
+* **Obter dados de comercialização do ano 2023 do controle BR:**
+
+```bash
+GET /api/v1/comercial?ano=2023&control=BR
+```
+
+* **Obter dados de comercialização do ano 2023 do controle BR, com destino para a Argentina, com quantidade em litros entre 1000 e 2000:**
+
+```bash
+GET /api/v1/comercial?ano=2023&control=BR&pais=Argentina&litros_min=1000&litros_max=2000
+```
+
+**Observações:**
+
+* A autenticação básica é necessária para acessar este endpoint.
+* Os dados de comercialização são obtidos de arquivos CSV armazenados na pasta `data`.
+* O endpoint utiliza a biblioteca `pandas` para filtrar e processar os dados.
+* O endpoint utiliza a biblioteca `flask_basicauth` para autenticação básica.
+* O endpoint utiliza a biblioteca `json` para converter os dados em formato JSON.
+
+**Códigos de Status HTTP:**
+
+* 200 OK: A requisição foi bem sucedida.
+* 400 Bad Request: A requisição está incorreta.
+* 401 Unauthorized: O usuário não está autorizado a acessar o endpoint.
+* 500 Internal Server Error: Ocorreu um erro interno no servidor.
+
 
 
 ## Endpoint importação
