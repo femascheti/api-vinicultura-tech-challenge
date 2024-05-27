@@ -1,4 +1,4 @@
-# Documentação API de Vinicultura da EMBRAPA 
+# Documentação API de Vitivinicultura da EMBRAPA 
 Esta API foi desenvolvida para facilitar o acesso e a análise de dados de vitivinicultura provenientes da Embrapa. A API oferece endpoints para consultar dados das seguintes categorias:
 
 * **Produção**: Obter informações sobre a produção de uva em diferentes regiões do Brasil, incluindo ano, quantidade, variedade e controle.
