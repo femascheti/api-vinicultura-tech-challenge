@@ -1,6 +1,6 @@
 # Documentação API de Vinicultura da EMBRAPA 
 
-!["Flowchart do diretório"](/flowchart_code.png)
+!["Flowchart do diretório"](config/flowchart_code.png)
 
 Esta API foi desenvolvida para facilitar o acesso e a análise de dados de vitivinicultura provenientes da Embrapa. A API oferece endpoints para consultar dados das seguintes categorias:
 
@@ -376,4 +376,4 @@ Kibana: Visualiza os logs armazenados no Elasticsearch, permitindo filtrar, pesq
 Git: Controle de versão do código-fonte da API e dos scripts de extração.
 Jenkins/GitLab CI/CD/CircleCI: Automatiza o processo de build, teste e deploy da API, garantindo que as novas versões sejam liberadas de forma rápida e confiável.
 
-!["Flowchart do processo de deploy completo"](/plano_deploy.png)
+!["Flowchart do processo de deploy completo"](config/plano_deploy.png)
