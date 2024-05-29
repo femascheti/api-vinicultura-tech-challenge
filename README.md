@@ -1,4 +1,4 @@
-# Documentação API de Vitinicultura da EMBRAPA 
+# API de Vitinicultura da EMBRAPA 
 
 !["Flowchart do diretório"](config/flowchart_code.png)
 
