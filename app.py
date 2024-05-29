@@ -1,10 +1,13 @@
 from flask import Flask, jsonify, request
-import pandas as pd
+from dotenv import load_dotenv
 from flask_basicauth import BasicAuth
+import pandas as pd
+import os
 
+load_dotenv()
 app = Flask(__name__)
-app.config['BASIC_AUTH_USERNAME'] = 'admin'
-app.config['BASIC_AUTH_PASSWORD'] = 'admin'
+app.config['BASIC_AUTH_USERNAME'] = os.getenv('BASIC_AUTH_USERNAME')
+app.config['BASIC_AUTH_PASSWORD'] = os.getenv('BASIC_AUTH_PASSWORD')
 
 basic_auth = BasicAuth(app)
 
@@ -59,7 +62,7 @@ def get_producao():
     
     return jsonify(producao_json)
 
-# Roda comercial
+# Rota comercial
 @app.route('/api/v1/comercial', methods=['GET'])
 @basic_auth.required
 def get_comercial():
@@ -74,7 +77,7 @@ def get_comercial():
     
     return jsonify(comercial_json)
 
-# Rotas para importação
+# Rota para importação
 @app.route('/api/v1/importacao/<tipo>', methods=['GET'])
 @basic_auth.required
 def get_importacao(tipo):
@@ -95,7 +98,7 @@ def get_importacao(tipo):
     
     return jsonify(importacao_json)
 
-# Rotas para exportação
+# Rota para exportação
 @app.route('/api/v1/exportacao/<tipo>', methods=['GET'])
 @basic_auth.required
 def get_exportacao(tipo):
@@ -116,7 +119,7 @@ def get_exportacao(tipo):
     
     return jsonify(exportacao_json)
 
-# Rotas processamento
+# Rota processamento
 @app.route('/api/v1/processa/<tipo>', methods=['GET',])
 @basic_auth.required
 def get_processa(tipo):

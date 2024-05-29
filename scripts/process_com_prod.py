@@ -1,4 +1,4 @@
-from tools import download_csv, normalize_dataframe, remover_acentos
+from scripts.utils import download_csv, normalize_dataframe, remover_acentos
 from unicodedata import normalize
 import os
 import pandas as pd

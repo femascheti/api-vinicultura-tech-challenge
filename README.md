@@ -1,4 +1,7 @@
 # Documentação API de Vinicultura da EMBRAPA 
+
+!["Flowchart do diretório"](/flowchart_code.png)
+
 Esta API foi desenvolvida para facilitar o acesso e a análise de dados de vitivinicultura provenientes da Embrapa. A API oferece endpoints para consultar dados das seguintes categorias:
 
 * **Produção**: Obter informações sobre a produção de uva em diferentes regiões do Brasil, incluindo ano, quantidade, variedade e controle.
@@ -344,3 +347,33 @@ GET /api/v1/processa/americanas_hibridas?kg_min=9000&kg_max=20000
 ```bash
 GET /api/v1/processa/americanas_hibridas?control=tintas_oberlin
 ```
+# Plano de deploy 
+
+1. Cron Job: Inicia diariamente o processo de extração de dados.
+2. Scripts de Extração: Baixam, limpam, transformam e normalizam os dados da Embrapa e salvam em arquivos CSV.
+3. Processamento de Dados: Formata os dados para armazenamento no banco de dados.
+4. Banco de Dados: Armazena os dados processados para acesso pela API.
+5. Dockerfile: Define as instruções para construir a imagem Docker da API.
+docker-compose.yml: Configura a API e os serviços relacionados, como o banco de dados, em containers Docker.
+6. Construir Imagem Docker: Cria a imagem Docker da API.
+7. Executar Imagem Docker: Inicia a API em um container Docker.
+8. Plataforma de Deploy: Publica a API em uma plataforma cloud (AWS EC2, Heroku, Google Cloud).
+9. API Deployada: A API fica disponível online para acesso.
+
+**Monitoramento:**
+Prometheus: Coleta dados em tempo real sobre o desempenho da API, permitindo identificar problemas com rapidez.
+Grafana: Grafana oferece dashboards personalizados com gráficos e estatísticas, permitindo visualizar os dados do Prometheus de forma clara e completa.
+
+Fornecimento alertas personalizados para métricas específicas, avisando você quando o desempenho da API estiver fora dos limites definidos.
+
+**Logging:**
+Logstash: Formata os logs da API e dos serviços relacionados.
+Elasticsearch: Armazena os logs em formato estruturado para pesquisa e análise.
+Kibana: Visualiza os logs armazenados no Elasticsearch, permitindo filtrar, pesquisar e analisar os logs.
+
+
+**CI/CD:**
+Git: Controle de versão do código-fonte da API e dos scripts de extração.
+Jenkins/GitLab CI/CD/CircleCI: Automatiza o processo de build, teste e deploy da API, garantindo que as novas versões sejam liberadas de forma rápida e confiável.
+
+!["Flowchart do processo de deploy completo"](/plano_deploy.png)
