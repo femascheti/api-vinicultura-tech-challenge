@@ -1,8 +1,11 @@
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 from flask_basicauth import BasicAuth
+from scripts.utils import filtrar_dataframe
 import pandas as pd
 import os
+
+load_dotenv(os.path.join(os.path.dirname(__file__), 'config', '.env'))
 
 load_dotenv()
 app = Flask(__name__)
@@ -10,38 +13,6 @@ app.config['BASIC_AUTH_USERNAME'] = os.getenv('BASIC_AUTH_USERNAME')
 app.config['BASIC_AUTH_PASSWORD'] = os.getenv('BASIC_AUTH_PASSWORD')
 
 basic_auth = BasicAuth(app)
-
-def filtrar_dataframe(df, ano=None, control=None, pais=None, dolar_min=None, dolar_max=None, kg_min=None, kg_max=None, litros_max=None, litros_min=None):
-    ano = request.args.get('ano')
-    pais = request.args.get('pais')
-    dolar_min = request.args.get('dolar_min')
-    dolar_max = request.args.get('dolar_max')
-    kg_min = request.args.get('kg_min')
-    kg_max = request.args.get('kg_max')
-    control = request.args.get('control')
-    litros_max = request.args.get('litros_max')
-    litros_min = request.args.get('litros_min')
-
-    if ano:
-        df = df[df['ano'] == int(ano)]
-    if control:
-        df = df[df['control'] == control]
-    if pais:
-        df = df[df['pais'] == pais]
-    if litros_min:
-        df = df[df['quantidade_litros'] >= float(litros_min)]
-    if litros_max:
-        df = df[df['quantidade_litros'] <= float(litros_max)]
-    if dolar_min:
-        df = df[df['quantidade_dolar'] >= float(dolar_min)]
-    if dolar_max:
-        df = df[df['quantidade_dolar'] <= float(dolar_max)]
-    if kg_min:
-        df = df[df['quantidade_kg'] >= float(kg_min)]
-    if kg_max:
-        df = df[df['quantidade_kg'] <= float(kg_max)]
-
-    return df
 
 @app.route("/")
 def home():

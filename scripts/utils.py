@@ -1,7 +1,8 @@
+from unicodedata import normalize
+from flask import Flask, jsonify, request
 import os
 import requests
 import pandas as pd
-from unicodedata import normalize
 
 def filtrar_dataframe(df, ano=None, control=None, pais=None, dolar_min=None, dolar_max=None, kg_min=None, kg_max=None, litros_max=None, litros_min=None):
     ano = request.args.get('ano')
